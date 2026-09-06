@@ -7,8 +7,7 @@ on:
   push:
     branches:
       - main
-  # The embedded font check talks to the Google Fonts API, so it runs on a
-  # schedule instead of gating merges — see the font-data job.
+  # Weekly run catches upstream font revisions between pull requests.
   schedule:
     - cron: "17 6 * * 1"
   workflow_dispatch:
@@ -54,12 +53,13 @@ jobs:
   font-data:
     name: Check embedded font data
     runs-on: ubuntu-latest
-    # Deliberately not a merge gate. The check re-downloads the faces from the
-    # Google Fonts API, so it fails both when someone hand-edits fontData.ts
-    # and when Google simply publishes a new font revision — the latter has
-    # nothing to do with whatever PR is open. Run it on a schedule, and fix
-    # drift with `python scripts/generate_font_data.py`.
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    # Gates merges, and also runs weekly to catch upstream drift between PRs.
+    #
+    # Note this can fail for a reason the PR did not cause: the check
+    # re-downloads the faces from the Google Fonts API, so a new upstream font
+    # revision turns it red everywhere until someone runs
+    # `python scripts/generate_font_data.py` and commits the result. That is
+    # the fix — regenerate, don't hand-edit fontData.ts.
 
     steps:
       - name: Checkout repository

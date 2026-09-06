@@ -26,6 +26,7 @@ import argparse
 import base64
 import re
 import sys
+import time
 from pathlib import Path
 from urllib.error import URLError
 from urllib.request import Request, urlopen
@@ -73,8 +74,21 @@ HEADER = """// Generated file — do not edit by hand.
 """
 
 
-def fetch(url: str) -> bytes:
-    return urlopen(Request(url, headers={"User-Agent": USER_AGENT}), timeout=60).read()
+def fetch(url: str, attempts: int = 3) -> bytes:
+    """Fetch a URL, retrying briefly on network errors.
+
+    `--check` gates pull requests, so a single dropped connection to the Google
+    Fonts API would otherwise fail an unrelated PR.
+    """
+    for attempt in range(1, attempts + 1):
+        try:
+            request = Request(url, headers={"User-Agent": USER_AGENT})
+            return urlopen(request, timeout=60).read()
+        except URLError:
+            if attempt == attempts:
+                raise
+            time.sleep(2 * attempt)
+    raise AssertionError("unreachable")
 
 
 def latin_faces(css: str) -> dict[str, str]:
