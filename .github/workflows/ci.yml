@@ -7,6 +7,11 @@ on:
   push:
     branches:
       - main
+  # The embedded font check talks to the Google Fonts API, so it runs on a
+  # schedule instead of gating merges — see the font-data job.
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -19,6 +24,7 @@ jobs:
   validate:
     name: Validate Python
     runs-on: ubuntu-latest
+    if: github.event_name != 'schedule'
 
     steps:
       - name: Checkout repository
@@ -44,3 +50,26 @@ jobs:
 
       - name: Run test suite
         run: make test
+
+  font-data:
+    name: Check embedded font data
+    runs-on: ubuntu-latest
+    # Deliberately not a merge gate. The check re-downloads the faces from the
+    # Google Fonts API, so it fails both when someone hand-edits fontData.ts
+    # and when Google simply publishes a new font revision — the latter has
+    # nothing to do with whatever PR is open. Run it on a schedule, and fix
+    # drift with `python scripts/generate_font_data.py`.
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # No dependencies: the script is stdlib-only.
+      - name: Check fontData.ts matches upstream
+        run: python scripts/generate_font_data.py --check
