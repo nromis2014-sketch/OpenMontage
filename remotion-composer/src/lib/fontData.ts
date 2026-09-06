@@ -1,11 +1,12 @@
 // Generated file — do not edit by hand.
-// Provenance, licensing and regeneration steps: see ./FONTS.md
+// Regenerate: python scripts/generate_font_data.py
+// Provenance, licensing and details: see ./FONTS.md
 //
 // The faces are embedded as base64 so that rendering never issues a network
 // request for a font, and so that nothing has to be awaited to apply one.
 // See ./localFonts.ts for why both of those matter.
 
-/** SpaceGrotesk-normal.woff2 — 22,288 bytes */
+/** Space Grotesk normal — 22,288 bytes */
 export const SPACE_GROTESK_NORMAL_WOFF2 =
   "d09GMgABAAAAAFcQABQAAAAAzrwAAFagAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGoMkG/p0HIlOP0hWQVKDKQZgP1NUQVRYJx4A" +
   "hFovRBEICoGBMOZ3C4RIADDoWAE2AiQDiQwEIAWEbgeLCgwHG969N1C9ds4vQm9WFed8bvrxZyNqt+M7lhAPFHBj6IaNA4AmGZH9" +
@@ -306,7 +307,7 @@ export const SPACE_GROTESK_NORMAL_WOFF2 =
   "NwMRwO2N7C+2Pc9nVIMopHmzsyUaDi3WEqGv9G0RZqEmYoi/e2qNPfrEBOCOdPe1SIhcg8Ad+rtqoMNj0CDoNE32d6ewvk93cnkd" +
   "EZpixyd+l3nLRfgzAA==";
 
-/** PlayfairDisplay-normal.woff2 — 38,404 bytes */
+/** Playfair Display normal — 38,404 bytes */
 export const PLAYFAIR_DISPLAY_NORMAL_WOFF2 =
   "d09GMgABAAAAAJYEABMAAAABUBgAAJWSAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGoJfG4G8JhyMBD9IVkFSjGwGYD9TVEFUgQ4A" +
   "hSwvYBEICoHzJIHBKQuEfgAwgaJcATYCJAOJYAQgBYoGB41zDAdbVTNxI5pjxyviqnQbAhDJnaZr+UNnI2zQHeIK8uZVVQd62DjG" +
@@ -822,7 +823,7 @@ export const PLAYFAIR_DISPLAY_NORMAL_WOFF2 =
   "iTLR5WWwiXeRvmA7bWmeg5/KUjN3/3IhqGVrh5WwiFwwRdx8HNu1Es0rNryZtHua+dzpbWm3Wc5KOcuziv80WbXmiVKPnfLgv7x6" +
   "T58FAA==";
 
-/** PlayfairDisplay-italic.woff2 — 38,804 bytes */
+/** Playfair Display italic — 38,804 bytes */
 export const PLAYFAIR_DISPLAY_ITALIC_WOFF2 =
   "d09GMgABAAAAAJeUABMAAAABNigAAJckAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGoJYG/UIHIw+P0hWQVKMTgZgP1NUQVSBCgCF" +
   "LC9gEQgKgf8Agck9C4RyADCBqVIBNgIkA4lIBCAFizgHjS4MB1unF3EDncN2AGp+dWMAlfPqtO0viorp5g6RnpvGD7bUip2FJH2M" +

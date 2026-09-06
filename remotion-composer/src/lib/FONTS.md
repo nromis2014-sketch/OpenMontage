@@ -25,18 +25,20 @@ redistribution alongside a project:
 
 ## Regenerating
 
-The woff2 files are not kept in the repo — `remotion-composer/public/` is
-gitignored — so regeneration re-downloads them:
+The woff2 files are not kept in the repo, so regeneration re-downloads them
+from the Google Fonts CSS API:
 
-1. Fetch the CSS with a **current-browser User-Agent** (an older UA yields
-   non-variable ttf/woff):
+```bash
+python scripts/generate_font_data.py
+```
 
-   ```
-   https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700
-   https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700
-   ```
+`--check` reports whether the committed file is current and writes nothing,
+exiting non-zero when it is stale.
 
-2. From each response take the `@font-face` block commented `/* latin */` —
-   not `latin-ext`, `cyrillic` or `vietnamese` — and download its woff2 URL.
-3. Base64-encode each file and replace the corresponding constant in
-   `fontData.ts`. Verify each download starts with the magic bytes `wOF2`.
+The script requests a weight *range* per family and keeps only the
+`/* latin */` face, which is what makes the API return one variable file per
+style rather than several static ones. It sends a current-browser User-Agent
+for the same reason — an older UA silently downgrades the response to
+per-weight ttf — and rejects any download not starting with the woff2 magic
+bytes `wOF2`, so a downgraded response fails loudly instead of embedding an
+unusable face.
