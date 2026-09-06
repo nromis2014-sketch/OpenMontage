@@ -205,6 +205,10 @@ interface Cut {
   rightLabel?: string;
   leftValue?: string;
   rightValue?: string;
+  // Per-side accents. Default to blue/green, which reads as "worse vs better" —
+  // override when both sides are bad, or when the better option is on the left.
+  leftColor?: string;
+  rightColor?: string;
   // Chart props
   chartData?: any[];
   chartSeries?: any[];
@@ -614,6 +618,8 @@ const SceneRenderer: React.FC<{ cut: Cut; theme: ThemeConfig }> = ({ cut, theme 
         leftValue={cut.leftValue} rightValue={cut.rightValue}
         title={cut.title} backgroundColor={bgColor} textColor={textColor}
         cardBackgroundColor={cut.cardBackgroundColor || theme.surfaceColor}
+        {...(cut.leftColor ? { leftColor: cut.leftColor } : {})}
+        {...(cut.rightColor ? { rightColor: cut.rightColor } : {})}
       />
     );
   }
